@@ -1,99 +1,44 @@
 @startuml
-!define ENTITY_COLOR #87CEEB-4682B4
-!define SERVICE_COLOR #90EE90-32CD32
-!define MODEL_COLOR #FFB6C1-FF69B4
-!define CONTROLLER_COLOR #FFD700-FF8C00
-
 skinparam {
   BackgroundColor #2F4F4F
-  ClassBackgroundColor ENTITY_COLOR
+  ClassBackgroundColor #87CEEB-4682B4
   ClassBorderColor #FFFFFF
   ArrowColor #FFFFFF
   FontColor #FFFFFF
 }
 
-skinparam class {
-  BackgroundColor<< Entity >> ENTITY_COLOR
-  BackgroundColor<< Service >> SERVICE_COLOR
-  BackgroundColor<< Model >> MODEL_COLOR
-  BackgroundColor<< Controller >> CONTROLLER_COLOR
-  FontName Arial
-  FontStyle Bold
+class "Пользователь" as User {
+  id: UUID
+  имя: string
+  email: string
+  премиум: boolean
 }
 
-class "👤 <b>Пользователь</b>" as User << Entity >> {
-  {field} 🔑 id: UUID
-  {field} 👤 имя: string
-  {field} 📧 email: string
-  {field} 🔒 хешПароля: string
-  {field} ⭐ премиум: boolean
-  {method} ✅ зарегистрироваться()
-  {method} 🔐 аутентификация()
-  {method} ⚙️ управлениеПрофилем()
+class "Валютная пара" as CurrencyPair {
+  базоваяВалюта: string
+  целеваяВалюта: string
+  символ: string
 }
 
-class "💱 <b>Валютная пара</b>" as CurrencyPair << Model >> {
-  {field} 🔑 id: UUID
-  {field} 📊 базоваяВалюта: string
-  {field} 📈 целеваяВалюта: string
-  {field} 🏷️ символ: string
-  {method} 📥 обновитьКурс()
+class "Котировка" as Quote {
+  курс: decimal
+  временнаяМетка: DateTime
 }
 
-class "📊 <b>Котировка</b>" as Quote << Model >> {
-  {field} 🔑 id: UUID
-  {field} 💰 курс: decimal
-  {field} 📅 временнаяМетка: DateTime
-  {field} 📈 изменение: decimal
-  {field} 📊 объем: long
-  {method} 📈 рассчитатьИзменение()
+class "Конвертер" as Converter {
+  конвертировать()
+  получитьКроссКурсы()
 }
 
-class "🔄 <b>Конвертер</b>" as Converter << Service >> {
-  {method} 🧮 конвертировать()
-  {method} 📊 получитьКроссКурсы()
-  {method} 💱 рассчитатьКомиссию()
-  {method} 📈 прогнозироватьКурс()
+class "API клиент" as APIClient {
+  получитьДанные()
 }
 
-class "🔔 <b>Менеджер уведомлений</b>" as Notifier << Service >> {
-  {field} ⚡ реальноеВремя: boolean
-  {field} 🤖 AI_прогнозы: boolean
-  {method} 🎯 настроитьОповещение()
-  {method} 📧 отправитьУведомление()
-  {method} 📊 анализироватьТренды()
-}
+' Связи
+User --> Quote
+CurrencyPair --> Quote
+Converter --> Quote
+Converter --> CurrencyPair
+APIClient --> Quote
 
-class "🌐 <b>API клиент</b>" as APIClient << Service >> {
-  {field} 🔑 apiKey: string
-  {field} 🔗 endpoint: string
-  {method} 📥 получитьДанные()
-  {method} 🔄 кэшироватьОтвет()
-  {method} ⚡ обработатьОшибки()
-}
-
-' Связи с оформлением
-User "1" -- "*" Quote : "📊 имеет >"
-User "1" -- "*" Notifier : "🔔 настраивает >"
-CurrencyPair "1" -- "*" Quote : "📈 содержит >"
-Converter }-- Quote : "использует"
-Converter }-- CurrencyPair : "работает с"
-APIClient ||..o{ Quote : "🔄 предоставляет >"
-Notifier }.. Quote : "📊 мониторит >"
-
-note bottom of Converter
-  <b>💎 Премиум функции:</b>
-  • Мгновенная конвертация
-  • Исторические данные
-  • AI прогнозы
-  • Мульти-валютность
-end note
-
-note right of APIClient
-  <b>🌐 Поддержка:</b>
-  • ЦБ РФ
-  • Forex
-  • Crypto exchanges
-  • Bloomberg
-end note
 @enduml
