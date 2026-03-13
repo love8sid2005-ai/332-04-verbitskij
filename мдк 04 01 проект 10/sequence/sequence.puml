@@ -1,0 +1,29 @@
+@startuml
+
+participant User
+participant HomeScreen
+participant HomeViewModel
+participant BottomSheet as TaskOptionsBottomSheet
+
+User -> HomeScreen: нажимает "..." у задачи
+HomeScreen -> HomeViewModel: selectTask(task)
+HomeViewModel --> HomeScreen: обновление состояния
+
+HomeScreen -> HomeViewModel: openBottomSheet(true)
+HomeViewModel --> HomeScreen: openBottomSheet = true
+
+HomeScreen -> TaskOptionsBottomSheet: отображение BottomSheet
+
+User -> TaskOptionsBottomSheet: выбирает "Перенести"
+
+TaskOptionsBottomSheet -> HomeScreen: onClickPushToTomorrow(task)
+HomeScreen -> HomeViewModel: pushToTomorrow(task)
+
+HomeViewModel --> HomeScreen: обновление TasksState
+
+HomeScreen -> HomeViewModel: openBottomSheet(false)
+HomeViewModel --> HomeScreen: openBottomSheet = false
+
+HomeScreen -> TaskOptionsBottomSheet: скрыть BottomSheet
+
+@enduml

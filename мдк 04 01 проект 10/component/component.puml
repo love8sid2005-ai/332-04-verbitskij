@@ -1,0 +1,37 @@
+@startuml
+
+package "Application" {
+    component "feature:home" as Home
+    component "feature:taskprogress" as TaskProgress
+    component "feature:add_task" as AddTask
+    component "feature:all_tasks" as AllTasks
+}
+
+package "Core Layer" {
+    component "core:domain" as Domain
+    component "core:presentation" as Presentation
+}
+
+package "Platform & External" {
+    component "Platform (Android/iOS)" as Platform
+    component "Koin (DI)" as DI
+    component "Navigation" as Navigation
+    component "Shared Resources" as Shared
+}
+
+Home --> TaskProgress : навигация
+Home --> AddTask : навигация
+Home --> AllTasks : навигация
+
+Home --> Presentation : ViewModel
+TaskProgress --> Domain
+AddTask --> Domain
+AllTasks --> Domain
+Presentation --> Domain
+
+Home --> DI : внедрение зависимостей
+Navigation --> Home
+Home --> Shared
+Platform --> Home
+
+@enduml

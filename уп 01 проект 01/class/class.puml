@@ -1,0 +1,60 @@
+@startuml
+
+class HomeViewModel {
+    + tasks: StateFlow<TasksState>
+    + username: StateFlow<String>
+    + selectedTask: StateFlow<Task?>
+    + openBottomSheet: StateFlow<Boolean>
+    --
+    + deleteTask(task: Task)
+    + pushToTomorrow(task: Task)
+    + markAsCompleted(task: Task)
+    + selectTask(task: Task?)
+    + openBottomSheet(isOpen: Boolean)
+}
+
+class Timer {
+    + timerState: StateFlow<TimerState>
+    + tickingTime: StateFlow<Long>
+    --
+    + pause()
+    + resume()
+}
+
+class TasksState <<sealed>> {
+}
+
+class Task {
+    + id: String
+    + title: String
+    + date: LocalDate
+    + completed: Boolean
+    + active: Boolean
+}
+
+class NavController {
+    + navigate(route: String)
+}
+
+class HomeScreen <<Composable>>
+class HomeScreenContent <<Composable>>
+class TaskOptionsBottomSheet <<Composable>>
+class TaskCard <<Composable>>
+class ActiveTaskCard <<Composable>>
+class TodayTaskProgressCard <<Composable>>
+
+HomeViewModel --> TasksState
+HomeViewModel --> Task
+HomeScreen --> HomeViewModel
+HomeScreen --> Timer
+HomeScreen --> NavController
+HomeScreen --> HomeScreenContent
+HomeScreen --> TaskOptionsBottomSheet
+
+HomeScreenContent --> TasksState
+HomeScreenContent --> Task
+HomeScreenContent --> TaskCard
+HomeScreenContent --> ActiveTaskCard
+HomeScreenContent --> TodayTaskProgressCard
+
+@enduml

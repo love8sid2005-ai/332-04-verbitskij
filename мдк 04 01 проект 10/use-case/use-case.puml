@@ -1,0 +1,34 @@
+@startuml
+
+left to right direction
+
+actor User as U
+
+package "TaskBloom" {
+    usecase "Просматривать задачи" as UC_View
+    usecase "Управлять задачей" as UC_Manage
+    usecase "Работать с таймером" as UC_Timer
+    usecase "Просматривать прогресс" as UC_Progress
+    usecase "Добавить задачу" as UC_Add
+
+    usecase "Редактировать" as UC_Edit
+    usecase "Удалить" as UC_Delete
+    usecase "Перенести на завтра" as UC_Push
+    usecase "Отметить выполненной" as UC_Complete
+    usecase "Открыть сессию задачи" as UC_Session
+}
+
+U --> UC_View
+U --> UC_Manage
+U --> UC_Timer
+U --> UC_Progress
+U --> UC_Add
+
+UC_Manage --> UC_Edit : <<include>>
+UC_Manage --> UC_Delete : <<include>>
+UC_Manage --> UC_Push : <<include>>
+UC_Manage --> UC_Complete : <<include>>
+
+UC_View <-- UC_Session : <<extend>>
+
+@enduml

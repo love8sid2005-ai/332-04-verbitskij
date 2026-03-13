@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-auth",
+  "version": "1.0.0",
+  "description": "Personal portfolio with phone authentication",
+  "scripts": {
+    "start": "php -S localhost:8000 -t public"
+  },
+  "license": "MIT"
+}
