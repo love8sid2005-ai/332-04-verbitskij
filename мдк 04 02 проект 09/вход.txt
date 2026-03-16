@@ -1,0 +1,23 @@
+Для регистрации нового пользователя:
+text
+http://localhost:8000/backend/register.php
+Для входа (если уже зарегистрированы):
+text
+http://localhost:8000/backend/login.php
+Главная страница (после входа):
+text
+http://localhost:8000/backend/index.php
+2. Быстрые ссылки для браузера:
+powershell
+# Откройте регистрацию
+start http://localhost:8000/backend/register.php
+
+# Или вход
+start http://localhost:8000/backend/login.php
+
+# Или главную (если уже вошли)
+start http://localhost:8000/backend/index.php
+
+powershell
+cd "C:\Users\maks\Desktop\auth_project"
+C:\PHP\php.exe -S localhost:8000

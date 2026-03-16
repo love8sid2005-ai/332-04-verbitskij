@@ -1,0 +1,40 @@
+# База данных SQLite
+backend/database.db
+backend/database.db-journal
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Логи
+*.log
+logs/
+error_log
+
+# Временные файлы
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# PHP
+vendor/
+composer.lock
+.phpunit.result.cache
+
+# Системные файлы
+.htaccess.local
+.env
+.env.local
+
+# Кэш
+cache/
+tmp/
+
