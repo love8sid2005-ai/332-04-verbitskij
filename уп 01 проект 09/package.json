@@ -1,0 +1,31 @@
+{
+  "name": "phone-auth-system",
+  "version": "1.0.0",
+  "description": "Система аутентификации по номеру телефона на PHP с SQLite",
+  "main": "backend/index.php",
+  "scripts": {
+    "init": "php backend/init.php",
+    "serve": "php -S localhost:8000",
+    "start": "php -S localhost:8000"
+  },
+  "keywords": [
+    "php",
+    "authentication",
+    "sqlite",
+    "phone-auth",
+    "portfolio",
+    "security"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "php": ">=8.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
+
