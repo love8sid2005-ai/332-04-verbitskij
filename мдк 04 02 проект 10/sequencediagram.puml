@@ -1,0 +1,75 @@
+@startuml
+title 💱 **Премиум система курсов валют - Sequence Diagram**
+
+actor "👤 Пользователь" as User
+participant "📱 Веб-интерфейс" as UI
+participant "🎮 API Gateway" as Gateway
+participant "⚡ Сервис котировок" as Quotes
+participant "🤖 AI Аналитика" as AI
+participant "💾 Кэш Redis" as Cache
+participant "🗄️ База данных" as DB
+participant "🌐 Внешние API" as External
+
+User -> UI: 🎯 Запрос AI-прогноза EUR/USD
+activate UI
+
+UI -> Gateway: 📡 POST /api/v1/ai-predict
+activate Gateway
+
+Gateway -> Quotes: 🔍 getPrediction("EUR/USD")
+activate Quotes
+
+Quotes -> Cache: ⚡ Проверить кэш
+activate Cache
+
+Cache --> Quotes: ❌ Данных нет
+deactivate Cache
+
+Quotes -> External: 🌐 Запрос реальных данных
+activate External
+External --> Quotes: ✅ JSON с котировками
+deactivate External
+
+Quotes -> AI: 🧠 Анализ трендов
+activate AI
+AI --> Quotes: 📊 Прогноз +86% точности
+deactivate AI
+
+Quotes -> Cache: 💾 Кэшировать на 5 мин
+activate Cache
+Cache --> Quotes: ✅ Сохранено
+deactivate Cache
+
+Quotes -> DB: 🗄️ Сохранить историю
+activate DB
+DB --> Quotes: ✅ Записано
+deactivate DB
+
+Quotes --> Gateway: 🎯 Прогноз готов
+deactivate Quotes
+
+Gateway --> UI: 📈 AI Prediction Result
+deactivate Gateway
+
+UI --> User: 🎊 Отображение премиум анализа
+deactivate UI
+
+' Параллельный процесс
+Quotes -> External: 🔄 Фоновая синхронизация
+activate External
+External --> Quotes: 📥 Обновленные данные
+deactivate External
+
+Quotes -> User: 🔔 Push-уведомление
+activate User
+User --> Quotes: 👁️ Прочитано
+deactivate User
+
+note over User, External
+  **💎 ПРЕМИУМ ОПЫТ**
+  • Мгновенные обновления
+  • AI прогнозы  
+  • Персональные уведомления
+  • Расширенная аналитика
+end note
+@enduml

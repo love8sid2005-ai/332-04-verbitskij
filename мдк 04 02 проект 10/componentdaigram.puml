@@ -1,0 +1,82 @@
+@startuml
+title 💱 **Премиум система курсов валют - Component Diagram**
+
+package "🎨 Фронтенд слой" {
+  [📱 React Web App\n//SPA с реальным временем//] as WebApp
+  [📲 Mobile App\n//React Native//] as MobileApp
+  [🖥️ Desktop Widget\n//Electron//] as Desktop
+  [📊 Admin Dashboard\n//Vue.js//] as Admin
+}
+
+package "⚡ Бэкенд сервисы" {
+  [🎮 API Gateway\n//Kong/Nginx//] as Gateway
+  [🔐 Auth Service\n//JWT/OAuth2//] as Auth
+  [💱 Quotes Service\n//Real-time data//] as Quotes
+  [🤖 AI Analytics\n//ML прогнозы//] as AI
+  [🔔 Notification Service\n//WebSocket/Push//] as Notify
+  [📈 Reporting Service\n//Генерация отчетов//] as Reports
+}
+
+package "💾 Слой данных" {
+  [🗄️ PostgreSQL\n//Основные данные//] as PG
+  [⚡ Redis Cache\n//Кэширование//] as Redis
+  [📊 TimescaleDB\n//Временные ряды//] as Timescale
+  [🔍 Elasticsearch\n//Поиск и логи//] as Elastic
+}
+
+package "🌐 Внешние системы" {
+  [🏦 ЦБ РФ API] as CBR
+  [💹 Forex Providers] as Forex
+  [₿ Crypto Exchanges] as Crypto
+  [📧 Email Service] as Email
+  [📱 Push Services] as Push
+}
+
+' Связи фронтенда
+WebApp --> Gateway
+MobileApp --> Gateway
+Desktop --> Gateway
+Admin --> Gateway
+
+' Связи бэкенда
+Gateway --> Auth
+Gateway --> Quotes
+Gateway --> AI
+Gateway --> Notify
+Gateway --> Reports
+
+' Внутренние связи сервисов
+Quotes --> AI
+AI --> Notify
+Notify --> Reports
+
+' Связи с данными
+Auth --> PG
+Quotes --> Redis
+Quotes --> Timescale
+AI --> Elastic
+Reports --> PG
+
+' Внешние интеграции
+Quotes --> CBR
+Quotes --> Forex
+Quotes --> Crypto
+Notify --> Email
+Notify --> Push
+
+note bottom of Quotes
+  **⚡ Характеристики:**
+  • 100ms обновление
+  • 99.9% uptime
+  • Мульти-источники
+  • Авто-фейловер
+end note
+
+note right of AI
+  **🤖 AI возможности:**
+  • Прогнозирование трендов
+  • Аномалия detection
+  • Персональные рекомендации
+  • Risk assessment
+end note
+@enduml
